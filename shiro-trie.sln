@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shiro-trie", "src\ShiroTrie.csproj", "{6F88645E-1148-4110-8576-1511C54FDE9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{B6AF0F7C-153B-455D-B29B-578F57CFA063}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F88645E-1148-4110-8576-1511C54FDE9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F88645E-1148-4110-8576-1511C54FDE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F88645E-1148-4110-8576-1511C54FDE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F88645E-1148-4110-8576-1511C54FDE9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6AF0F7C-153B-455D-B29B-578F57CFA063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6AF0F7C-153B-455D-B29B-578F57CFA063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6AF0F7C-153B-455D-B29B-578F57CFA063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6AF0F7C-153B-455D-B29B-578F57CFA063}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

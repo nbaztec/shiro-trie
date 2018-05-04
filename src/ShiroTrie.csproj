@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>ShiroTrie</RootNamespace>
+    <AssemblyName>ShiroTrie</AssemblyName>
+    <Version>1.0.0</Version>
+    <Authors>nbaztec</Authors>
+    <Description>Apache Shiro styled permission manager.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/nbaztec/shiro-trie</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nbaztec/shiro-trie</RepositoryUrl>
+    <PackageTags>Apache Shiro Permissions Trie</PackageTags>
+  </PropertyGroup>
+</Project>
