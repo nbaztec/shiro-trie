@@ -4,7 +4,7 @@ A simple .NET Core library to manage [Apache Shiro](http://shiro.apache.org/perm
 # Installation
 
 ```
-$ dotnet add package EntityFramework
+$ dotnet add package ShiroTrie 
 ```
 
  # Example
