@@ -1,6 +1,9 @@
 # Introduction
 A simple .NET Core library to manage [Apache Shiro](http://shiro.apache.org/permissions.html)-styled permissions.
 
+
+Inspired by the [shiro-trie](https://www.npmjs.com/package/shiro-trie) npm package.
+
 # Installation
 
 ```
@@ -23,7 +26,7 @@ var permissions = new[]
 };
 
 // add permissions to trie
-var trie = new Trie();
+var trie = new PermissionTrie();
 trie.Add(scopes);
 
 

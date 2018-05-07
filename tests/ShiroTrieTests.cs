@@ -25,7 +25,7 @@ namespace tests
 
             const int expectedFinalScopeCount = 15;
 
-            var trie = new Trie();
+            var trie = new PermissionTrie();
             trie.Add(scopes);
 
             Assert.Equal(trie.Count, expectedFinalScopeCount);
@@ -63,7 +63,7 @@ namespace tests
                 "n1",
             };
 
-            var trie = new Trie();
+            var trie = new PermissionTrie();
             trie.Add(scopes);
             foreach (var scope in expectedPositiveCases)
             {
@@ -108,7 +108,7 @@ namespace tests
                 "n4:x3:s1:x4:s4",
             };
 
-            var trie = new Trie();
+            var trie = new PermissionTrie();
             trie.Add(scopes);
             foreach (var scope in expectedPositiveCases)
             {
@@ -156,7 +156,7 @@ namespace tests
                 "n4:s1:s2",
             };
 
-            var trie = new Trie();
+            var trie = new PermissionTrie();
             trie.Add(scopes);
             foreach (var scope in expectedPositiveCases)
             {

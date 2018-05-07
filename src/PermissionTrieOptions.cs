@@ -1,6 +1,6 @@
 ﻿namespace ShiroTrie
 {
-    public class TrieOptions
+    public class PermissionTrieOptions
     {
         public string NamespaceSeparator { get; set; } = "";
         public string ScopeSeparator { get; set; } = ",";

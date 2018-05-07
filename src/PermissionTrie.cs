@@ -5,16 +5,16 @@
     using System.Linq;
 
 
-    public class Trie
+    public class PermissionTrie : ITrie
     {
         private readonly TrieNode root;
-        private readonly TrieOptions options;
+        private readonly PermissionTrieOptions options;
         public int Count { get; private set; }
 
-        public Trie()
+        public PermissionTrie()
         {
             this.root = new TrieNode();
-            this.options = new TrieOptions
+            this.options = new PermissionTrieOptions
             {
                 NamespaceSeparator = ":",
                 ScopeSeparator = ",",
@@ -22,7 +22,8 @@
             };
         }
 
-        public Trie(TrieOptions options): this()
+        public PermissionTrie(PermissionTrieOptions options)
+            : this()
         {
             this.options = options;
         }
