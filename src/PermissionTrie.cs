@@ -32,7 +32,12 @@
         {
             foreach (var value in values)
             {
-                this.addRecursive(value, this.root);
+                if (string.IsNullOrEmpty(value))
+                {
+                    continue;
+                }
+
+                this.addRecursive(this.prepareToken(value), this.root);
             }
 
             this.Count = this.countRecursive(this.root);
@@ -40,12 +45,17 @@
 
         public bool Check(string value)
         {
-            return this.checkRecursive(value, this.root);
+            return !string.IsNullOrEmpty(value) && this.checkRecursive(this.prepareToken(value), this.root);
         }
 
         public void Print()
         {
             this.printRecursive(string.Empty, this.root);
+        }
+
+        private string prepareToken(string value)
+        {
+            return $"{value}{this.options.NamespaceSeparator}{this.options.LeafCharacter}";
         }
 
         private void addRecursive(string value, TrieNode node)
@@ -97,19 +107,19 @@
                     return false;
                 }
 
-                // handle wildcards
-                if (curNode.Exists(this.options.WildcardString))
+                if (curNode.Exists(p))
                 {
-                    curNode = curNode[this.options.WildcardString];
+                    curNode = curNode[p];
                     continue;
                 }
 
-                if (!curNode.Exists(p))
+                // handle wildcards
+                if (!curNode.Exists(this.options.WildcardString))
                 {
                     return false;
                 }
 
-                curNode = curNode[p];
+                curNode = curNode[this.options.WildcardString];
             }
 
             return curNode.IsLeaf;
@@ -119,7 +129,10 @@
         {
             if (node.IsLeaf)
             {
-                Console.WriteLine("{0}", prefix.Substring(0, prefix.Length - this.options.NamespaceSeparator.Length));
+                // trim the trailing separator and the leaf character before printing
+                var trimLen = this.options.NamespaceSeparator.Length +
+                              this.options.NamespaceSeparator.Length + 1;
+                Console.WriteLine("{0}", prefix.Substring(0, prefix.Length - trimLen));
                 return;
             }
 

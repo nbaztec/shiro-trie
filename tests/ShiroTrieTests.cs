@@ -122,6 +122,42 @@ namespace tests
         }
 
         [Fact]
+        public void ShouldRespectWildcardTokens2()
+        {
+            var scopes = new[]
+            {
+                "*:*",
+                "*:*:*",
+            };
+
+            var expectedPositiveCases = new[]
+            {
+                "n1:s1:x1",
+                "n1:s1",
+            };
+
+            var expectedNegativeCases = new[]
+            {
+                "n1",
+                "n2:x1:s1:s3",
+            };
+
+            var trie = new PermissionTrie();
+            trie.Add(scopes);
+            foreach (var scope in expectedPositiveCases)
+            {
+                var x = trie.Check(scope);
+                Assert.Equal(x, true);
+            }
+
+            foreach (var scope in expectedNegativeCases)
+            {
+                var x = trie.Check(scope);
+                Assert.Equal(x, false);
+            }
+        }
+
+        [Fact]
         public void ShouldRespectScopeSeparatorToken()
         {
             var scopes = new[]
