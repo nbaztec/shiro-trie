@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>ShiroTrie</RootNamespace>
     <AssemblyName>ShiroTrie</AssemblyName>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>nbaztec</Authors>
     <Description>Apache Shiro styled permission manager.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

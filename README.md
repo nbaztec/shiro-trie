@@ -53,4 +53,23 @@ foreach (var check in checks)
 {
     Console.WriteLine("{0} = {1}", check, trie.Check(check));
 }
+
+
+/*
+> Output:
+file:read = True
+file:create = False
+file:update = False
+file:delete = False
+printer = False
+scanner:read = False
+image:png:read = True
+audio:mp3:high:sample = True
+audio:mp3:high:sample:once = False
+user:delete = True
+user:* = True
+user:create = True
+mail = True
+bash-tty = False
+*/
 ```
