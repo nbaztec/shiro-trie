@@ -61,13 +61,14 @@
         private void addRecursive(string value, TrieNode node)
         {
             var curNode = node;
-            var parts = value.Split(this.options.NamespaceSeparator, StringSplitOptions.RemoveEmptyEntries);
+
+            var parts = value.Split(new[] { this.options.NamespaceSeparator }, StringSplitOptions.RemoveEmptyEntries);
 
 
             for (var i = 0; i < parts.Length; i++)
             {
                 var part = parts[i].Trim();
-                var components = part.Split(this.options.ScopeSeparator, StringSplitOptions.RemoveEmptyEntries);
+                var components = part.Split(new[] { this.options.ScopeSeparator }, StringSplitOptions.RemoveEmptyEntries);
                 if (components.Length == 1)
                 {
                     curNode = curNode.Add(components[0]);
@@ -96,7 +97,7 @@
         private bool checkRecursive(string value, TrieNode node)
         {
             var curNode = node;
-            var parts = value.Split(this.options.NamespaceSeparator, StringSplitOptions.RemoveEmptyEntries);
+            var parts = value.Split(new[] { this.options.NamespaceSeparator }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var part in parts)
             {
                 var p = part.Trim();
