@@ -3,6 +3,7 @@ using Xunit;
 
 namespace tests
 {
+    using System.Collections.Generic;
     using ShiroTrie;
 
     public class ShiroTrieTests
@@ -67,12 +68,12 @@ namespace tests
             trie.Add(scopes);
             foreach (var scope in expectedPositiveCases)
             {
-                Assert.Equal(trie.Check(scope), true);
+                Assert.True(trie.Check(scope), $"{scope} returned false");
             }
 
             foreach (var scope in expectedNegativeCases)
             {
-                Assert.Equal(trie.Check(scope), false);
+                Assert.False(trie.Check(scope), $"{scope} returned true");
             }
         }
 
@@ -93,67 +94,100 @@ namespace tests
                 "n1:s1:x3",
                 "n2:x1",
                 "n2:x2",
+                "n2:s1:x1",
+                "n2:s2:x2",
                 "n3:x1:s1",
                 "n3:x2:s1",
+                "n3:x2:s1:x4",
                 "n4:x1:s1:x2",
                 "n4:x3:s1:x4",
+                "n4:x3:s1:x4:s4",
             };
 
             var expectedNegativeCases = new[]
             {
                 "n1:s2:x1",
-                "n2:x1:s1",
                 "n3:x1:s2",
                 "n4:x1:s3:x2",
-                "n4:x3:s1:x4:s4",
             };
 
             var trie = new PermissionTrie();
             trie.Add(scopes);
             foreach (var scope in expectedPositiveCases)
             {
-                Assert.Equal(trie.Check(scope), true);
+                Assert.True(trie.Check(scope), $"{scope} returned false");
             }
 
             foreach (var scope in expectedNegativeCases)
             {
-                Assert.Equal(trie.Check(scope), false);
+                Assert.False(trie.Check(scope), $"{scope} returned true");
             }
         }
 
         [Fact]
-        public void ShouldRespectWildcardTokens2()
+        public void ShouldRespectPureWildcardTokens()
         {
-            var scopes = new[]
+            var testScopes = new Dictionary<string, Tuple<string[], string[]>>
             {
-                "*:*",
-                "*:*:*",
+                {
+                    "*",
+                    new Tuple<string[], string[]>(
+                        new[]
+                        {
+                            "n1",
+                            "n1:s1:x1",
+                            "n1:s1",
+                        },
+                        new string[]{}
+                    )
+                },
+                {
+                    "*:*",
+                    new Tuple<string[], string[]>(
+                        new[]
+                        {
+                            "n1",
+                            "n1:s1:x1",
+                            "n1:s1",
+                            "n2:x1:s1:s3",
+                        },
+                        new string[] {}
+                    )
+                },
+                {
+                    "*:*:*",
+                    new Tuple<string[], string[]>(
+                        new[]
+                        {
+                            "n1:s1:x1",
+                            "n1:s1:x1:y1",
+                            "n2:x1",
+                        },
+                        new[]
+                        {
+                            "n1",
+                        }
+                    )
+                },
             };
 
-            var expectedPositiveCases = new[]
+            foreach (var testScope in testScopes)
             {
-                "n1:s1:x1",
-                "n1:s1",
-            };
+                var trie = new PermissionTrie();
+                trie.Add(new[] { testScope.Key });
 
-            var expectedNegativeCases = new[]
-            {
-                "n1",
-                "n2:x1:s1:s3",
-            };
+                var expectedPositiveCases = testScope.Value.Item1;
+                var expectedNegativeCases = testScope.Value.Item2;
 
-            var trie = new PermissionTrie();
-            trie.Add(scopes);
-            foreach (var scope in expectedPositiveCases)
-            {
-                var x = trie.Check(scope);
-                Assert.Equal(x, true);
-            }
+                foreach (var scope in expectedPositiveCases)
+                {
+                    Assert.True(trie.Check(scope), $"{scope} returned false for {testScope.Key}");
+                }
 
-            foreach (var scope in expectedNegativeCases)
-            {
-                var x = trie.Check(scope);
-                Assert.Equal(x, false);
+                foreach (var scope in expectedNegativeCases)
+                {
+                    Assert.False(trie.Check(scope), $"{scope} returned true for {testScope.Key}");
+                }
             }
         }
 
@@ -172,36 +206,37 @@ namespace tests
                 "n1:s1",
                 "n1:s2",
                 "n2:s1:s3",
+                "n1:s1:s2",
+                "n1:s1:s2:x4",
                 "n2:s1:s4",
                 "n2:s2:s3",
                 "n2:s2:s4",
                 "n3",
+                "n3:s1",
                 "n4",
+                "n4:s1:s2",
             };
 
             var expectedNegativeCases = new[]
             {
-                "n1:s1:s2",
                 "n1:s3",
                 "n2:s3",
                 "n2:s4",
                 "n2:s1:s5",
                 "n2:s5:s4",
                 "n5",
-                "n3:s1",
-                "n4:s1:s2",
             };
 
             var trie = new PermissionTrie();
             trie.Add(scopes);
             foreach (var scope in expectedPositiveCases)
             {
-                Assert.Equal(trie.Check(scope), true);
+                Assert.True(trie.Check(scope), $"{scope} returned false");
             }
 
             foreach (var scope in expectedNegativeCases)
             {
-                Assert.Equal(trie.Check(scope), false);
+                Assert.False(trie.Check(scope), $"{scope} returned true");
             }
         }
     }

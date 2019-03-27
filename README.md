@@ -2,16 +2,17 @@
 A simple .NET Core library to manage [Apache Shiro](http://shiro.apache.org/permissions.html)-styled permissions.
 
 
-Inspired by the [shiro-trie](https://www.npmjs.com/package/shiro-trie) npm package.
+Inspired by the [shiro-trie](https://www.npmjs.com/package/shiro-trie) npm package 
+and [Apache Shiro](https://shiro.apache.org/permissions.html) styled permissions.
 
 # Installation
 
 ```
-$ dotnet add package ShiroTrie 
+$ dotnet add package ShiroTrie
 ```
 
  # Example
- 
+
  ```c#
 var permissions = new[]
 {
@@ -46,6 +47,8 @@ var checks = new[]
     "user:*",
     "user:create",
     "mail",
+    "mail:delete",
+    "mail:delete:once",
     "bash-tty",
 };
 
@@ -65,11 +68,13 @@ printer = False
 scanner:read = False
 image:png:read = True
 audio:mp3:high:sample = True
-audio:mp3:high:sample:once = False
+audio:mp3:high:sample:once = True
 user:delete = True
 user:* = True
 user:create = True
 mail = True
+mail:delete = True
+mail:delete:once = True
 bash-tty = False
 */
 ```

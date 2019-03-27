@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.InteropServices;
 
 
     public class PermissionTrie : ITrie
@@ -45,7 +46,7 @@
 
         public bool Check(string value)
         {
-            return !string.IsNullOrEmpty(value) && this.checkRecursive(this.prepareToken(value), this.root);
+            return !string.IsNullOrEmpty(value) && this.checkRecursive(value, this.root);
         }
 
         public void Print()
@@ -55,7 +56,7 @@
 
         private string prepareToken(string value)
         {
-            return $"{value}{this.options.NamespaceSeparator}{this.options.LeafCharacter}";
+            return value.EndsWith(this.options.WildcardString) ? value : $"{value}:{this.options.WildcardString}";
         }
 
         private void addRecursive(string value, TrieNode node)
@@ -98,6 +99,7 @@
         {
             var curNode = node;
             var parts = value.Split(new[] { this.options.NamespaceSeparator }, StringSplitOptions.RemoveEmptyEntries);
+            var isWildcard = false;
             foreach (var part in parts)
             {
                 var p = part.Trim();
@@ -105,11 +107,12 @@
                 // exit early if trie ended prematurely
                 if (curNode.IsLeaf)
                 {
-                    return false;
+                    return isWildcard;
                 }
 
                 if (curNode.Exists(p))
                 {
+                    isWildcard = false;
                     curNode = curNode[p];
                     continue;
                 }
@@ -121,9 +124,15 @@
                 }
 
                 curNode = curNode[this.options.WildcardString];
+                isWildcard = true;
             }
 
-            return curNode.IsLeaf;
+            if (curNode.IsLeaf)
+            {
+                return true;
+            }
+
+            return curNode.Exists(this.options.WildcardString) && curNode[this.options.WildcardString].IsLeaf;
         }
 
         private void printRecursive(string prefix, TrieNode node)
